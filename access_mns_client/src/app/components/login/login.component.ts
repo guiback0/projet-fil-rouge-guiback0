@@ -6,7 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 // Angular Material imports
@@ -44,14 +44,19 @@ export class LoginComponent implements OnInit, OnDestroy {
   hidePassword = true;
   isLoading = false;
   private destroy$ = new Subject<void>();
+  private returnUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private userStateService: UserStateService,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+    // Récupérer l'URL de retour depuis les paramètres de requête
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+  }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -59,7 +64,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     // Redirect if already authenticated
     if (this.authenticationService.isAuthenticated()) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate([this.returnUrl]);
     }
   }
 
@@ -131,7 +136,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 panelClass: ['success-snackbar'],
               }
             );
-            this.router.navigate(['/dashboard']);
+            this.router.navigate([this.returnUrl]);
           },
           error: (error) => {
             this.handleLoginError(error);
