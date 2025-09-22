@@ -98,12 +98,10 @@ ARG APP_ENV=qa
 ARG APP_SECRET=temp-build-secret
 ARG DATABASE_URL=sqlite:///%kernel.project_dir%/var/build.db
 
-# Create minimal .env for build process
-RUN echo "APP_ENV=${APP_ENV}" > .env && \
-    echo "APP_SECRET=${APP_SECRET}" >> .env && \
-    echo "DATABASE_URL=${DATABASE_URL}" >> .env
-
 RUN set -eux; \
+	echo "APP_ENV=${APP_ENV}" > .env; \
+	echo "APP_SECRET=${APP_SECRET}" >> .env; \
+	echo "DATABASE_URL=${DATABASE_URL}" >> .env; \
 	mkdir -p var/cache var/log; \
 	composer dump-autoload --classmap-authoritative --no-dev; \
 	chmod +x bin/console; sync;
