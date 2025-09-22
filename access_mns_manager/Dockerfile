@@ -92,13 +92,14 @@ RUN set -eux; \
 COPY --link . ./
 RUN rm -Rf frankenphp/
 
-# Handle environment configuration based on deployment context
-RUN if [ -n "${RAILWAY_ENVIRONMENT:-}" ]; then \
-        echo "Running on Railway - using environment variables"; \
-        rm -f .env || true; \
-    else \
-        echo "Running locally - keeping .env file"; \
-    fi
+# Declare Railway build-time variables
+ARG RAILWAY_ENVIRONMENT
+ARG APP_ENV=qa
+ARG APP_SECRET=temp-build-secret
+
+# Create minimal .env for build process
+RUN echo "APP_ENV=${APP_ENV}" > .env && \
+    echo "APP_SECRET=${APP_SECRET}" >> .env
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
