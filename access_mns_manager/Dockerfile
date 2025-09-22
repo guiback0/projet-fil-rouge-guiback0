@@ -86,11 +86,7 @@ COPY --link frankenphp/conf.d/20-app.prod.ini $PHP_INI_DIR/app.conf.d/
 # prevent the reinstallation of vendors at every changes in the source code
 COPY --link composer.* symfony.* ./
 RUN set -eux; \
-	if [ "$APP_ENV" = "prod" ]; then \
-		composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress; \
-	else \
-		composer install --no-cache --prefer-dist --no-autoloader --no-scripts --no-progress; \
-	fi
+	composer install --no-cache --prefer-dist --no-autoloader --no-scripts --no-progress
 
 # copy sources
 COPY --link . ./
@@ -98,7 +94,7 @@ RUN rm -Rf frankenphp/
 
 # Declare Railway build-time variables
 ARG RAILWAY_ENVIRONMENT
-ARG APP_ENV=qa
+ARG APP_ENV=dev
 ARG APP_SECRET=temp-build-secret
 ARG DATABASE_URL=sqlite:///%kernel.project_dir%/var/build.db
 
@@ -107,9 +103,5 @@ RUN set -eux; \
 	echo "APP_SECRET=${APP_SECRET}" >> .env; \
 	echo "DATABASE_URL=${DATABASE_URL}" >> .env; \
 	mkdir -p var/cache var/log; \
-	if [ "${APP_ENV}" = "prod" ]; then \
-		composer dump-autoload --classmap-authoritative --no-dev; \
-	else \
-		composer dump-autoload --classmap-authoritative; \
-	fi; \
+	composer dump-autoload --classmap-authoritative; \
 	chmod +x bin/console; sync;

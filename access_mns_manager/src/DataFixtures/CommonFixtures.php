@@ -29,7 +29,7 @@ class CommonFixtures extends Fixture implements FixtureGroupInterface
 
     public static function getGroups(): array
     {
-        return ['dev', 'test', 'qa'];
+        return ['dev', 'test'];
     }
 
     public function load(ObjectManager $manager): void
