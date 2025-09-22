@@ -57,6 +57,13 @@ if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		fi
 	fi
 
+	# Clear and warm up cache for production
+	if [ "$APP_ENV" = "prod" ] || [ "$APP_ENV" = "qa" ]; then
+		echo 'Clearing and warming up cache...'
+		php bin/console cache:clear --no-interaction
+		php bin/console cache:warmup --no-interaction
+	fi
+
 	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
 	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
 
