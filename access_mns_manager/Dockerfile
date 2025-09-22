@@ -106,5 +106,5 @@ RUN echo "APP_ENV=${APP_ENV}" > .env && \
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
 	composer dump-autoload --classmap-authoritative --no-dev; \
-	composer run-script --no-dev post-install-cmd; \
+	DATABASE_URL="sqlite:///%kernel.project_dir%/var/build.db" composer run-script --no-dev post-install-cmd; \
 	chmod +x bin/console; sync;
