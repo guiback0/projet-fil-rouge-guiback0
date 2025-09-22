@@ -107,5 +107,9 @@ RUN set -eux; \
 	echo "APP_SECRET=${APP_SECRET}" >> .env; \
 	echo "DATABASE_URL=${DATABASE_URL}" >> .env; \
 	mkdir -p var/cache var/log; \
-	composer dump-autoload --classmap-authoritative --no-dev; \
+	if [ "${APP_ENV}" = "prod" ]; then \
+		composer dump-autoload --classmap-authoritative --no-dev; \
+	else \
+		composer dump-autoload --classmap-authoritative; \
+	fi; \
 	chmod +x bin/console; sync;
