@@ -55,7 +55,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar
   ) {
     // Récupérer l'URL de retour depuis les paramètres de requête
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+    this.returnUrl =
+      this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
   }
 
   ngOnInit(): void {
@@ -194,17 +195,18 @@ export class LoginComponent implements OnInit, OnDestroy {
           }
         }
         break;
-        
+
       case 'TOO_MANY_ATTEMPTS':
-        message = 'Trop de tentatives de connexion. Veuillez réessayer dans 15 minutes.';
+        message =
+          'Trop de tentatives de connexion. Veuillez réessayer dans 15 minutes.';
         duration = 8000; // Show longer for rate limit
         panelClass = ['warning-snackbar'];
         break;
-        
+
       case 'INVALID_CREDENTIALS':
         message = 'Email ou mot de passe incorrect';
         break;
-        
+
       default:
         message = error.message || 'Erreur de connexion au serveur';
         break;
