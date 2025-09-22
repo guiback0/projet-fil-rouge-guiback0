@@ -92,8 +92,13 @@ RUN set -eux; \
 COPY --link . ./
 RUN rm -Rf frankenphp/
 
-# Copy Railway-specific .env for build process
-COPY --link .env.railway ./.env
+# Handle environment configuration based on deployment context
+RUN if [ -n "${RAILWAY_ENVIRONMENT:-}" ]; then \
+        echo "Running on Railway - using environment variables"; \
+        rm -f .env || true; \
+    else \
+        echo "Running locally - keeping .env file"; \
+    fi
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
