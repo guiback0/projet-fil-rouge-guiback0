@@ -99,9 +99,6 @@ ARG APP_SECRET=temp-build-secret
 ARG DATABASE_URL=sqlite:///%kernel.project_dir%/var/build.db
 
 RUN set -eux; \
-	echo "APP_ENV=${APP_ENV}" > .env; \
-	echo "APP_SECRET=${APP_SECRET}" >> .env; \
-	echo "DATABASE_URL=${DATABASE_URL}" >> .env; \
 	mkdir -p var/cache var/log; \
 	composer dump-autoload --classmap-authoritative; \
 	chmod +x bin/console; sync
