@@ -121,31 +121,13 @@ ARG LOCK_DSN
 
 
 RUN set -eux; \
-	printf 'APP_ENV=%s\nAPP_SECRET=%s\nDATABASE_URL=%s\nSERVER_NAME=%s\nSYMFONY_VERSION=%s\nSTRIPE_API_KEY=%s\nSTRIPE_PUBLIC_KEY=%s\nJWT_SECRET_KEY=%s\nJWT_PUBLIC_KEY=%s\nJWT_PASSPHRASE=%s\nMERCURE_PUBLISHER_JWT_KEY=%s\nMERCURE_SUBSCRIBER_JWT_KEY=%s\nMERCURE_JWT_SECRET=%s\nMERCURE_PUBLISHER_JWT_ALG=%s\nMERCURE_SUBSCRIBER_JWT_ALG=%s\nMERCURE_URL=%s\nMERCURE_PUBLIC_URL=%s\nSTABILITY=%s\nFRANKENPHP_WORKER_CONFIG=%s\nXDEBUG_MODE=%s\nMAILER_DSN=%s\nMESSENGER_TRANSPORT_DSN=%s\nTRUSTED_PROXIES=%s\nLOCK_DSN=%s\n' \
-		"${APP_ENV}" \
-		"${APP_SECRET}" \
-		"${DATABASE_URL}" \
-		"${SERVER_NAME:-0.0.0.0:8080}" \
-		"${SYMFONY_VERSION:-7.0.*}" \
-		"${STRIPE_API_KEY}" \
-		"${STRIPE_PUBLIC_KEY}" \
-		"${JWT_SECRET_KEY:-%kernel.project_dir%/config/jwt/private.pem}" \
-		"${JWT_PUBLIC_KEY:-%kernel.project_dir%/config/jwt/public.pem}" \
-		"${JWT_PASSPHRASE:-}" \
-		"${MERCURE_PUBLISHER_JWT_KEY:-!ChangeThisMercureHubJWTSecretKey!}" \
-		"${MERCURE_SUBSCRIBER_JWT_KEY:-!ChangeThisMercureHubJWTSecretKey!}" \
-		"${MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}" \
-		"${MERCURE_PUBLISHER_JWT_ALG:-HS256}" \
-		"${MERCURE_SUBSCRIBER_JWT_ALG:-HS256}" \
-		"${MERCURE_URL:-http://localhost/.well-known/mercure}" \
-		"${MERCURE_PUBLIC_URL:-https://localhost/.well-known/mercure}" \
-		"${STABILITY:-stable}" \
-		"${FRANKENPHP_WORKER_CONFIG:-}" \
-		"${XDEBUG_MODE:-off}" \
-		"${MAILER_DSN:-null://null}" \
-		"${MESSENGER_TRANSPORT_DSN:-doctrine://default?auto_setup=0}" \
-		"${TRUSTED_PROXIES:-127.0.0.1,172.16.0.0/12,10.0.0.0/8,192.168.0.0/16}" \
-		"${LOCK_DSN:-flock}" > .env; \
+	echo "APP_ENV=qa" > .env; \
+	echo "APP_SECRET=temp-build-secret" >> .env; \
+	echo "MERCURE_PUBLISHER_JWT_KEY=!ChangeThisMercureHubJWTSecretKey!" >> .env; \
+	echo "MERCURE_SUBSCRIBER_JWT_KEY=!ChangeThisMercureHubJWTSecretKey!" >> .env; \
+	echo "MERCURE_JWT_SECRET=!ChangeThisMercureHubJWTSecretKey!" >> .env; \
+	echo "MERCURE_PUBLISHER_JWT_ALG=HS256" >> .env; \
+	echo "MERCURE_SUBSCRIBER_JWT_ALG=HS256" >> .env; \
 	mkdir -p var/cache var/log; \
 	composer dump-autoload --classmap-authoritative; \
 	chmod +x bin/console; sync;
