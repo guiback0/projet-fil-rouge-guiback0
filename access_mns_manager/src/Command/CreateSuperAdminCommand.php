@@ -33,10 +33,10 @@ class CreateSuperAdminCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         // Récupération des variables d'environnement
-        $email = $_ENV['SUPER_ADMIN_EMAIL'] ?? null;
-        $password = $_ENV['SUPER_ADMIN_PASSWORD'] ?? null;
-        $nom = $_ENV['SUPER_ADMIN_NOM'] ?? 'SYSTÈME';
-        $prenom = $_ENV['SUPER_ADMIN_PRENOM'] ?? 'SuperAdmin';
+        $email = getenv('SUPER_ADMIN_EMAIL') ?: null;
+        $password = getenv('SUPER_ADMIN_PASSWORD') ?: null;
+        $nom = getenv('SUPER_ADMIN_NOM') ?: 'SYSTÈME';
+        $prenom = getenv('SUPER_ADMIN_PRENOM') ?: 'SuperAdmin';
 
         if (!$email || !$password) {
             $io->error('Les variables d\'environnement SUPER_ADMIN_EMAIL et SUPER_ADMIN_PASSWORD doivent être définies.');
