@@ -94,7 +94,7 @@ RUN rm -Rf frankenphp/
 
 # Declare Railway build-time variables
 ARG RAILWAY_ENVIRONMENT
-ARG APP_ENV=dev
+ARG APP_ENV=qa
 ARG APP_SECRET=temp-build-secret
 ARG DATABASE_URL=sqlite:///%kernel.project_dir%/var/build.db
 
@@ -104,4 +104,7 @@ RUN set -eux; \
 	echo "DATABASE_URL=${DATABASE_URL}" >> .env; \
 	mkdir -p var/cache var/log; \
 	composer dump-autoload --classmap-authoritative; \
-	chmod +x bin/console; sync;
+	chmod +x bin/console; sync
+
+# Finaliser le stage de production
+CMD [ "frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile" ]
