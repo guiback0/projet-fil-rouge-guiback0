@@ -121,7 +121,7 @@ ARG LOCK_DSN
 
 
 RUN set -eux; \
-	cat > .env << 'ENVFILE'
+	cat > .env << 'ENVFILE' && \
 APP_ENV=qa
 APP_SECRET=temp-build-secret
 SERVER_NAME=0.0.0.0:8080
