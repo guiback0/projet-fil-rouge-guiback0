@@ -121,29 +121,27 @@ ARG LOCK_DSN
 
 
 RUN set -eux; \
-	cat > .env << 'ENVFILE' && \
-APP_ENV=qa
-APP_SECRET=temp-build-secret
-SERVER_NAME=0.0.0.0:8080
-SYMFONY_VERSION=7.0.*
-JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
-JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
-JWT_PASSPHRASE=
-MERCURE_PUBLISHER_JWT_KEY=!ChangeThisMercureHubJWTSecretKey!
-MERCURE_SUBSCRIBER_JWT_KEY=!ChangeThisMercureHubJWTSecretKey!
-MERCURE_JWT_SECRET=!ChangeThisMercureHubJWTSecretKey!
-MERCURE_PUBLISHER_JWT_ALG=HS256
-MERCURE_SUBSCRIBER_JWT_ALG=HS256
-MERCURE_URL=http://localhost/.well-known/mercure
-MERCURE_PUBLIC_URL=https://localhost/.well-known/mercure
-STABILITY=stable
-FRANKENPHP_WORKER_CONFIG=
-XDEBUG_MODE=off
-MAILER_DSN=null://null
-MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0
-TRUSTED_PROXIES=127.0.0.1,172.16.0.0/12,10.0.0.0/8,192.168.0.0/16
-LOCK_DSN=flock
-ENVFILE
+	echo 'APP_ENV=qa' > .env; \
+	echo 'APP_SECRET=temp-build-secret' >> .env; \
+	echo 'SERVER_NAME=0.0.0.0:8080' >> .env; \
+	echo 'SYMFONY_VERSION=7.0.*' >> .env; \
+	echo 'JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem' >> .env; \
+	echo 'JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem' >> .env; \
+	echo 'JWT_PASSPHRASE=' >> .env; \
+	echo 'MERCURE_PUBLISHER_JWT_KEY=!ChangeThisMercureHubJWTSecretKey!' >> .env; \
+	echo 'MERCURE_SUBSCRIBER_JWT_KEY=!ChangeThisMercureHubJWTSecretKey!' >> .env; \
+	echo 'MERCURE_JWT_SECRET=!ChangeThisMercureHubJWTSecretKey!' >> .env; \
+	echo 'MERCURE_PUBLISHER_JWT_ALG=HS256' >> .env; \
+	echo 'MERCURE_SUBSCRIBER_JWT_ALG=HS256' >> .env; \
+	echo 'MERCURE_URL=http://localhost/.well-known/mercure' >> .env; \
+	echo 'MERCURE_PUBLIC_URL=https://localhost/.well-known/mercure' >> .env; \
+	echo 'STABILITY=stable' >> .env; \
+	echo 'FRANKENPHP_WORKER_CONFIG=' >> .env; \
+	echo 'XDEBUG_MODE=off' >> .env; \
+	echo 'MAILER_DSN=null://null' >> .env; \
+	echo 'MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0' >> .env; \
+	echo 'TRUSTED_PROXIES=127.0.0.1,172.16.0.0/12,10.0.0.0/8,192.168.0.0/16' >> .env; \
+	echo 'LOCK_DSN=flock' >> .env; \
 	mkdir -p var/cache var/log; \
 	composer dump-autoload --classmap-authoritative; \
 	chmod +x bin/console; sync;
