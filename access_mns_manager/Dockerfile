@@ -98,7 +98,8 @@ ARG APP_ENV=prod
 ARG APP_SECRET=temp-build-secret
 ARG DATABASE_URL=sqlite:///%kernel.project_dir%/var/build.db
 
-# Remove SERVER_NAME configuration - using PORT-based config instead
+# Configure SERVER_NAME for Railway deployment
+ENV SERVER_NAME=access-mns-manager-qa.up.railway.app
 
 RUN set -eux; \
 	echo "APP_ENV=prod" > .env; \
