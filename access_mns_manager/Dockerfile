@@ -94,54 +94,14 @@ RUN rm -Rf frankenphp/
 
 # Declare Railway build-time variables
 ARG RAILWAY_ENVIRONMENT
-ARG APP_ENV=qa
+ARG APP_ENV=dev
 ARG APP_SECRET=temp-build-secret
 ARG DATABASE_URL=sqlite:///%kernel.project_dir%/var/build.db
-ARG SERVER_NAME=0.0.0.0:8080
-ARG SYMFONY_VERSION
-ARG STRIPE_API_KEY
-ARG STRIPE_PUBLIC_KEY
-ARG JWT_SECRET_KEY
-ARG JWT_PUBLIC_KEY
-ARG JWT_PASSPHRASE
-ARG MERCURE_PUBLISHER_JWT_KEY
-ARG MERCURE_SUBSCRIBER_JWT_KEY
-ARG MERCURE_JWT_SECRET
-ARG MERCURE_PUBLISHER_JWT_ALG
-ARG MERCURE_SUBSCRIBER_JWT_ALG
-ARG MERCURE_URL
-ARG MERCURE_PUBLIC_URL
-ARG STABILITY
-ARG FRANKENPHP_WORKER_CONFIG
-ARG XDEBUG_MODE
-ARG MAILER_DSN
-ARG MESSENGER_TRANSPORT_DSN
-ARG TRUSTED_PROXIES
-ARG LOCK_DSN
-
 
 RUN set -eux; \
-	echo 'APP_ENV=qa' > .env; \
-	echo 'APP_SECRET=temp-build-secret' >> .env; \
-	echo 'SERVER_NAME=0.0.0.0:8080' >> .env; \
-	echo 'SYMFONY_VERSION=7.0.*' >> .env; \
-	echo 'JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem' >> .env; \
-	echo 'JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem' >> .env; \
-	echo 'JWT_PASSPHRASE=' >> .env; \
-	echo 'MERCURE_PUBLISHER_JWT_KEY=!ChangeThisMercureHubJWTSecretKey!' >> .env; \
-	echo 'MERCURE_SUBSCRIBER_JWT_KEY=!ChangeThisMercureHubJWTSecretKey!' >> .env; \
-	echo 'MERCURE_JWT_SECRET=!ChangeThisMercureHubJWTSecretKey!' >> .env; \
-	echo 'MERCURE_PUBLISHER_JWT_ALG=HS256' >> .env; \
-	echo 'MERCURE_SUBSCRIBER_JWT_ALG=HS256' >> .env; \
-	echo 'MERCURE_URL=http://localhost/.well-known/mercure' >> .env; \
-	echo 'MERCURE_PUBLIC_URL=https://localhost/.well-known/mercure' >> .env; \
-	echo 'STABILITY=stable' >> .env; \
-	echo 'FRANKENPHP_WORKER_CONFIG=' >> .env; \
-	echo 'XDEBUG_MODE=off' >> .env; \
-	echo 'MAILER_DSN=null://null' >> .env; \
-	echo 'MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0' >> .env; \
-	echo 'TRUSTED_PROXIES=127.0.0.1,172.16.0.0/12,10.0.0.0/8,192.168.0.0/16' >> .env; \
-	echo 'LOCK_DSN=flock' >> .env; \
+	echo "APP_ENV=${APP_ENV}" > .env; \
+	echo "APP_SECRET=${APP_SECRET}" >> .env; \
+	echo "DATABASE_URL=${DATABASE_URL}" >> .env; \
 	mkdir -p var/cache var/log; \
 	composer dump-autoload --classmap-authoritative; \
 	chmod +x bin/console; sync;
