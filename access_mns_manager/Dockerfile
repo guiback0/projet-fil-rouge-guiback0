@@ -13,7 +13,7 @@ FROM frankenphp_upstream AS frankenphp_base
 
 WORKDIR /app
 
-# VOLUME /app/var/
+VOLUME /app/var/
 # persistent / runtime deps
 # hadolint ignore=DL3008
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -94,7 +94,7 @@ RUN rm -Rf frankenphp/
 
 # Declare Railway build-time variables
 ARG RAILWAY_ENVIRONMENT
-ARG APP_ENV=qa
+ARG APP_ENV=prod
 ARG APP_SECRET=temp-build-secret
 ARG DATABASE_URL=sqlite:///%kernel.project_dir%/var/build.db
 
