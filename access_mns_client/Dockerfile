@@ -17,7 +17,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install project dependencies using npm ci (ensures a clean, reproducible install)
-RUN --mount=type=cache,id=npm-cache,target=/root/.npm npm ci
+RUN npm ci
 
 # Install Angular CLI globally to build the application
 RUN npm install -g @angular/cli
