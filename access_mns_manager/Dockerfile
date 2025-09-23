@@ -121,30 +121,31 @@ ARG LOCK_DSN
 
 
 RUN set -eux; \
-	echo "APP_ENV=\"${APP_ENV}\"" > .env; \
-	echo "APP_SECRET=\"${APP_SECRET}\"" >> .env; \
-	echo "DATABASE_URL=\"${DATABASE_URL}\"" >> .env; \
-	echo "SERVER_NAME=\"${SERVER_NAME:-0.0.0.0:8080}\"" >> .env; \
-	echo "SYMFONY_VERSION=\"${SYMFONY_VERSION:-7.0.*}\"" >> .env; \
-	echo "STRIPE_API_KEY=\"${STRIPE_API_KEY}\"" >> .env; \
-	echo "STRIPE_PUBLIC_KEY=\"${STRIPE_PUBLIC_KEY}\"" >> .env; \
-	echo "JWT_SECRET_KEY=\"${JWT_SECRET_KEY:-%kernel.project_dir%/config/jwt/private.pem}\"" >> .env; \
-	echo "JWT_PUBLIC_KEY=\"${JWT_PUBLIC_KEY:-%kernel.project_dir%/config/jwt/public.pem}\"" >> .env; \
-	echo "JWT_PASSPHRASE=\"${JWT_PASSPHRASE:-}\"" >> .env; \
-	echo "MERCURE_PUBLISHER_JWT_KEY=\"${MERCURE_PUBLISHER_JWT_KEY:-!ChangeThisMercureHubJWTSecretKey!}\"" >> .env; \
-	echo "MERCURE_SUBSCRIBER_JWT_KEY=\"${MERCURE_SUBSCRIBER_JWT_KEY:-!ChangeThisMercureHubJWTSecretKey!}\"" >> .env; \
-	echo "MERCURE_JWT_SECRET=\"${MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}\"" >> .env; \
-	echo "MERCURE_PUBLISHER_JWT_ALG=\"${MERCURE_PUBLISHER_JWT_ALG:-HS256}\"" >> .env; \
-	echo "MERCURE_SUBSCRIBER_JWT_ALG=\"${MERCURE_SUBSCRIBER_JWT_ALG:-HS256}\"" >> .env; \
-	echo "MERCURE_URL=\"${MERCURE_URL:-http://localhost/.well-known/mercure}\"" >> .env; \
-	echo "MERCURE_PUBLIC_URL=\"${MERCURE_PUBLIC_URL:-https://localhost/.well-known/mercure}\"" >> .env; \
-	echo "STABILITY=\"${STABILITY:-stable}\"" >> .env; \
-	echo "FRANKENPHP_WORKER_CONFIG=\"${FRANKENPHP_WORKER_CONFIG:-}\"" >> .env; \
-	echo "XDEBUG_MODE=\"${XDEBUG_MODE:-off}\"" >> .env; \
-	echo "MAILER_DSN=\"${MAILER_DSN:-null://null}\"" >> .env; \
-	echo "MESSENGER_TRANSPORT_DSN=\"${MESSENGER_TRANSPORT_DSN:-doctrine://default?auto_setup=0}\"" >> .env; \
-	echo "TRUSTED_PROXIES=\"${TRUSTED_PROXIES:-127.0.0.1,172.16.0.0/12,10.0.0.0/8,192.168.0.0/16}\"" >> .env; \
-	echo "LOCK_DSN=\"${LOCK_DSN:-flock}\"" >> .env; \
+	printf 'APP_ENV=%s\nAPP_SECRET=%s\nDATABASE_URL=%s\nSERVER_NAME=%s\nSYMFONY_VERSION=%s\nSTRIPE_API_KEY=%s\nSTRIPE_PUBLIC_KEY=%s\nJWT_SECRET_KEY=%s\nJWT_PUBLIC_KEY=%s\nJWT_PASSPHRASE=%s\nMERCURE_PUBLISHER_JWT_KEY=%s\nMERCURE_SUBSCRIBER_JWT_KEY=%s\nMERCURE_JWT_SECRET=%s\nMERCURE_PUBLISHER_JWT_ALG=%s\nMERCURE_SUBSCRIBER_JWT_ALG=%s\nMERCURE_URL=%s\nMERCURE_PUBLIC_URL=%s\nSTABILITY=%s\nFRANKENPHP_WORKER_CONFIG=%s\nXDEBUG_MODE=%s\nMAILER_DSN=%s\nMESSENGER_TRANSPORT_DSN=%s\nTRUSTED_PROXIES=%s\nLOCK_DSN=%s\n' \
+		"${APP_ENV}" \
+		"${APP_SECRET}" \
+		"${DATABASE_URL}" \
+		"${SERVER_NAME:-0.0.0.0:8080}" \
+		"${SYMFONY_VERSION:-7.0.*}" \
+		"${STRIPE_API_KEY}" \
+		"${STRIPE_PUBLIC_KEY}" \
+		"${JWT_SECRET_KEY:-%kernel.project_dir%/config/jwt/private.pem}" \
+		"${JWT_PUBLIC_KEY:-%kernel.project_dir%/config/jwt/public.pem}" \
+		"${JWT_PASSPHRASE:-}" \
+		"${MERCURE_PUBLISHER_JWT_KEY:-!ChangeThisMercureHubJWTSecretKey!}" \
+		"${MERCURE_SUBSCRIBER_JWT_KEY:-!ChangeThisMercureHubJWTSecretKey!}" \
+		"${MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}" \
+		"${MERCURE_PUBLISHER_JWT_ALG:-HS256}" \
+		"${MERCURE_SUBSCRIBER_JWT_ALG:-HS256}" \
+		"${MERCURE_URL:-http://localhost/.well-known/mercure}" \
+		"${MERCURE_PUBLIC_URL:-https://localhost/.well-known/mercure}" \
+		"${STABILITY:-stable}" \
+		"${FRANKENPHP_WORKER_CONFIG:-}" \
+		"${XDEBUG_MODE:-off}" \
+		"${MAILER_DSN:-null://null}" \
+		"${MESSENGER_TRANSPORT_DSN:-doctrine://default?auto_setup=0}" \
+		"${TRUSTED_PROXIES:-127.0.0.1,172.16.0.0/12,10.0.0.0/8,192.168.0.0/16}" \
+		"${LOCK_DSN:-flock}" > .env; \
 	mkdir -p var/cache var/log; \
 	composer dump-autoload --classmap-authoritative; \
 	chmod +x bin/console; sync;
