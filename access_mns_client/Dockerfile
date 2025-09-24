@@ -34,7 +34,7 @@ ARG APP_ENV
 RUN if [ "$RAILWAY_ENVIRONMENT" = "prod" ] || [ "$APP_ENV" = "prod" ]; then \
         echo "Building for production environment (RAILWAY_ENVIRONMENT=$RAILWAY_ENVIRONMENT, APP_ENV=$APP_ENV)"; \
         npm run build --configuration=production; \
-    elif [ "$RAILWAY_ENVIRONMENT" = "qa" ] || [ "$APP_ENV" = "qa" ]; then \
+    elif [ "$RAILWAY_ENVIRONMENT" = "qa" ] || [ "$APP_ENV" = "qa" ] || [ -n "$RAILWAY_ENVIRONMENT" ]; then \
         echo "Building for QA environment (RAILWAY_ENVIRONMENT=$RAILWAY_ENVIRONMENT, APP_ENV=$APP_ENV)"; \
         npm run build --configuration=qa; \
     elif [ "$APP_ENV" = "dev" ]; then \
