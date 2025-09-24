@@ -62,7 +62,10 @@ class AuthController extends AbstractController
         */
 
         $rawContent = $request->getContent();
-        $data = json_decode($rawContent, true);
+        
+        // FIX TEMPORAIRE: Corriger l'échappement du ! dans les mots de passe
+        $fixedContent = str_replace('\\!', '!', $rawContent);
+        $data = json_decode($fixedContent, true);
 
         // DEBUG TEMPORAIRE
         if (!is_array($data)) {
@@ -72,6 +75,7 @@ class AuthController extends AbstractController
                 'message' => 'Format JSON invalide',
                 'debug' => [
                     'raw_content' => $rawContent,
+                    'fixed_content' => $fixedContent,
                     'content_type' => $request->headers->get('Content-Type'),
                     'json_error' => json_last_error_msg(),
                     'decoded_data' => $data
