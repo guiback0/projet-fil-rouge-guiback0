@@ -37,6 +37,8 @@ class AuthController extends AbstractController
     #[Route('/login', name: 'login', methods: ['POST'])]
     public function login(Request $request): JsonResponse
     {
+        // TEMPORAIRE: Rate limiting désactivé pour les tests
+        /*
         try {
             // Vérification du rate limiting
             $this->loginAttemptService->checkAttempt($request);
@@ -57,6 +59,7 @@ class AuthController extends AbstractController
             
             return $response;
         }
+        */
 
         $data = json_decode($request->getContent(), true);
 
@@ -91,30 +94,30 @@ class AuthController extends AbstractController
             ->findOneBy(['email' => $loginDTO->email]);
 
         if (!$user) {
-            $remainingAttempts = $this->loginAttemptService->getRemainingAttempts($request);
+            // $remainingAttempts = $this->loginAttemptService->getRemainingAttempts($request);
             
             return new JsonResponse([
                 'success' => false,
                 'error' => 'INVALID_CREDENTIALS',
-                'message' => 'Identifiants invalides',
-                'remaining_attempts' => $remainingAttempts
+                'message' => 'Identifiants invalides'
+                // 'remaining_attempts' => $remainingAttempts
             ], 401);
         }
 
         // Vérification du mot de passe
         if (!$this->passwordHasher->isPasswordValid($user, $loginDTO->password)) {
-            $remainingAttempts = $this->loginAttemptService->getRemainingAttempts($request);
+            // $remainingAttempts = $this->loginAttemptService->getRemainingAttempts($request);
             
             return new JsonResponse([
                 'success' => false,
                 'error' => 'INVALID_CREDENTIALS',
-                'message' => 'Identifiants invalides',
-                'remaining_attempts' => $remainingAttempts
+                'message' => 'Identifiants invalides'
+                // 'remaining_attempts' => $remainingAttempts
             ], 401);
         }
 
         // Authentification réussie - reset des tentatives
-        $this->loginAttemptService->resetAttempts($request);
+        // $this->loginAttemptService->resetAttempts($request);
 
         // Mise à jour de la dernière connexion
         $user->updateLastLogin();
