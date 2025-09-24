@@ -25,8 +25,22 @@ RUN npm install -g @angular/cli
 # Copy the rest of the application source code into the container
 COPY . .
 
-# Build the Angular application
-RUN npm run build --configuration=production
+# Declare build-time variables from Railway
+ARG RAILWAY_ENVIRONMENT
+ARG APP_ENV
+
+# Build the Angular application with appropriate configuration
+# Use the correct config based on Railway environment
+RUN if [ "$RAILWAY_ENVIRONMENT" = "prod" ] || [ "$APP_ENV" = "prod" ]; then \
+        echo "Building for production environment (RAILWAY_ENVIRONMENT=$RAILWAY_ENVIRONMENT, APP_ENV=$APP_ENV)"; \
+        npm run build --configuration=production; \
+    elif [ "$RAILWAY_ENVIRONMENT" = "qa" ] || [ "$APP_ENV" = "qa" ]; then \
+        echo "Building for QA environment (RAILWAY_ENVIRONMENT=$RAILWAY_ENVIRONMENT, APP_ENV=$APP_ENV)"; \
+        npm run build --configuration=qa; \
+    else \
+        echo "Building for development environment (RAILWAY_ENVIRONMENT=$RAILWAY_ENVIRONMENT, APP_ENV=$APP_ENV)"; \
+        npm run build --configuration=development; \
+    fi
 
 # =========================================
 # Stage 2: Prepare Nginx to Serve Static Files

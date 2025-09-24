@@ -13,7 +13,7 @@ import {
   providedIn: 'root'
 })
 export class StripeService {
-  private readonly API_BASE_URL = 'http://localhost:8000/manager/api';
+  private readonly API_BASE_URL = '${environment.apiBaseUrl}';
 
   constructor(
     private http: HttpClient,
