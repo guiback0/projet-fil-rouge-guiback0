@@ -115,4 +115,5 @@ RUN set -eux; \
 	chmod +x bin/console; sync
 
 # Finaliser le stage de production
+EXPOSE 8000
 CMD [ "frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile" ]
