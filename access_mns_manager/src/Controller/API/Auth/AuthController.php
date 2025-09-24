@@ -236,7 +236,7 @@ class AuthController extends AbstractController
     }
 
     /**
-     * Test endpoint pour vérifier l'API
+     * Test endpoint pour vérifier l'API (public)
      */
     #[Route('/test', name: 'test', methods: ['GET'])]
     public function test(): JsonResponse
