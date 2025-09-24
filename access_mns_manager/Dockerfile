@@ -100,8 +100,8 @@ ARG APP_ENV=prod
 ARG APP_SECRET=temp-build-secret
 ARG DATABASE_URL=sqlite:///%kernel.project_dir%/var/build.db
 
-# Configure SERVER_NAME for Railway deployment
-ENV SERVER_NAME=access-mns-manager-qa.up.railway.app
+# Configure SERVER_NAME for Railway deployment (HTTPS obligatoire pour Let's Encrypt)
+ENV SERVER_NAME=https://access-mns-manager-qa.up.railway.app
 
 RUN set -eux; \
 	echo "APP_ENV=prod" > .env; \
@@ -114,6 +114,5 @@ RUN set -eux; \
 	composer dump-autoload --classmap-authoritative; \
 	chmod +x bin/console; sync
 
-# Finaliser le stage de production
-EXPOSE 8000
+# Finaliser le stage de production  
 CMD [ "frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile" ]
