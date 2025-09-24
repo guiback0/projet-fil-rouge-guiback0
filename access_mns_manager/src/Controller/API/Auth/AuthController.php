@@ -37,8 +37,6 @@ class AuthController extends AbstractController
     #[Route('/login', name: 'login', methods: ['POST'])]
     public function login(Request $request): JsonResponse
     {
-        // TEMPORAIRE: Rate limiting désactivé pour les tests
-        /*
         try {
             // Vérification du rate limiting
             $this->loginAttemptService->checkAttempt($request);
@@ -59,7 +57,6 @@ class AuthController extends AbstractController
             
             return $response;
         }
-        */
 
         $rawContent = $request->getContent();
         
@@ -105,30 +102,30 @@ class AuthController extends AbstractController
             ->findOneBy(['email' => $loginDTO->email]);
 
         if (!$user) {
-            // $remainingAttempts = $this->loginAttemptService->getRemainingAttempts($request);
+            $remainingAttempts = $this->loginAttemptService->getRemainingAttempts($request);
             
             return new JsonResponse([
                 'success' => false,
                 'error' => 'INVALID_CREDENTIALS',
-                'message' => 'Identifiants invalides'
-                // 'remaining_attempts' => $remainingAttempts
+                'message' => 'Identifiants invalides',
+                'remaining_attempts' => $remainingAttempts
             ], 401);
         }
 
         // Vérification du mot de passe
         if (!$this->passwordHasher->isPasswordValid($user, $loginDTO->password)) {
-            // $remainingAttempts = $this->loginAttemptService->getRemainingAttempts($request);
+            $remainingAttempts = $this->loginAttemptService->getRemainingAttempts($request);
             
             return new JsonResponse([
                 'success' => false,
                 'error' => 'INVALID_CREDENTIALS',
-                'message' => 'Identifiants invalides'
-                // 'remaining_attempts' => $remainingAttempts
+                'message' => 'Identifiants invalides',
+                'remaining_attempts' => $remainingAttempts
             ], 401);
         }
 
         // Authentification réussie - reset des tentatives
-        // $this->loginAttemptService->resetAttempts($request);
+        $this->loginAttemptService->resetAttempts($request);
 
         // Mise à jour de la dernière connexion
         $user->updateLastLogin();
@@ -235,18 +232,6 @@ class AuthController extends AbstractController
         ]);
     }
 
-    /**
-     * Test endpoint pour vérifier l'API (public)
-     */
-    #[Route('/test', name: 'test', methods: ['GET'])]
-    public function test(): JsonResponse
-    {
-        return new JsonResponse([
-            'success' => true,
-            'message' => 'API fonctionne',
-            'timestamp' => date('Y-m-d H:i:s')
-        ]);
-    }
 
     /**
      * Déconnexion (côté client principalement)
