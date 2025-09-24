@@ -105,7 +105,7 @@ ENV SERVER_NAME=:8000
 
 RUN set -eux; \
 	GENERATED_SECRET=$(openssl rand -hex 32); \
-	echo "APP_ENV=${APP_ENV}}" > .env; \
+	echo "APP_ENV=${APP_ENV}" > .env; \
 	echo "APP_DEBUG=false" >> .env; \
 	echo "APP_SECRET=${GENERATED_SECRET}" >> .env; \
 	echo "DATABASE_URL=${DATABASE_URL}" >> .env; \

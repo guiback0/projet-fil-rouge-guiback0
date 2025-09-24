@@ -236,6 +236,19 @@ class AuthController extends AbstractController
     }
 
     /**
+     * Test endpoint pour vérifier l'API
+     */
+    #[Route('/test', name: 'test', methods: ['GET'])]
+    public function test(): JsonResponse
+    {
+        return new JsonResponse([
+            'success' => true,
+            'message' => 'API fonctionne',
+            'timestamp' => date('Y-m-d H:i:s')
+        ]);
+    }
+
+    /**
      * Déconnexion (côté client principalement)
      */
     #[Route('/logout', name: 'logout', methods: ['POST'])]
