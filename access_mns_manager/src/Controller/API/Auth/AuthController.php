@@ -61,14 +61,21 @@ class AuthController extends AbstractController
         }
         */
 
-        $data = json_decode($request->getContent(), true);
+        $rawContent = $request->getContent();
+        $data = json_decode($rawContent, true);
 
-        // Validation des données avec DTO
+        // DEBUG TEMPORAIRE
         if (!is_array($data)) {
             return new JsonResponse([
                 'success' => false,
                 'error' => 'INVALID_JSON',
-                'message' => 'Format JSON invalide'
+                'message' => 'Format JSON invalide',
+                'debug' => [
+                    'raw_content' => $rawContent,
+                    'content_type' => $request->headers->get('Content-Type'),
+                    'json_error' => json_last_error_msg(),
+                    'decoded_data' => $data
+                ]
             ], 400);
         }
 
