@@ -106,7 +106,7 @@ ENV SERVER_NAME=:8000
 RUN set -eux; \
 	echo "APP_ENV=prod" > .env; \
 	echo "APP_DEBUG=false" >> .env; \
-	echo "APP_SECRET=${APP_SECRET}" >> .env; \
+	echo "APP_SECRET=\$(openssl rand -hex 32)" >> .env; \
 	echo "DATABASE_URL=${DATABASE_URL}" >> .env; \
 	echo "TRUSTED_PROXIES=REMOTE_ADDR" >> .env; \
 	echo "TRUSTED_HOSTS=^access-mns-manager-qa\.up\.railway\.app$" >> .env; \
