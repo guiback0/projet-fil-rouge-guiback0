@@ -100,8 +100,8 @@ ARG APP_ENV=prod
 ARG APP_SECRET=temp-build-secret
 ARG DATABASE_URL=sqlite:///%kernel.project_dir%/var/build.db
 
-# Configure SERVER_NAME for Railway deployment (HTTPS obligatoire pour Let's Encrypt)
-ENV SERVER_NAME=https://access-mns-manager-qa.up.railway.app
+# Configure pour Railway - pas de gestion HTTPS automatique (Railway s'en charge)  
+ENV SERVER_NAME=:8000
 
 RUN set -eux; \
 	echo "APP_ENV=prod" > .env; \
