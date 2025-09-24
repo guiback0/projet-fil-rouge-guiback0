@@ -104,9 +104,10 @@ ARG DATABASE_URL=sqlite:///%kernel.project_dir%/var/build.db
 ENV SERVER_NAME=:8000
 
 RUN set -eux; \
+	GENERATED_SECRET=$(openssl rand -hex 32); \
 	echo "APP_ENV=prod" > .env; \
 	echo "APP_DEBUG=false" >> .env; \
-	echo "APP_SECRET=$$(openssl rand -hex 32)" >> .env; \
+	echo "APP_SECRET=${GENERATED_SECRET}" >> .env; \
 	echo "DATABASE_URL=${DATABASE_URL}" >> .env; \
 	echo "TRUSTED_PROXIES=REMOTE_ADDR" >> .env; \
 	echo "TRUSTED_HOSTS=^access-mns-manager-qa\.up\.railway\.app$" >> .env; \
