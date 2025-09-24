@@ -37,6 +37,9 @@ RUN if [ "$RAILWAY_ENVIRONMENT" = "prod" ] || [ "$APP_ENV" = "prod" ]; then \
     elif [ "$RAILWAY_ENVIRONMENT" = "qa" ] || [ "$APP_ENV" = "qa" ]; then \
         echo "Building for QA environment (RAILWAY_ENVIRONMENT=$RAILWAY_ENVIRONMENT, APP_ENV=$APP_ENV)"; \
         npm run build --configuration=qa; \
+    elif [ "$APP_ENV" = "dev" ]; then \
+        echo "Building for local development environment (APP_ENV=$APP_ENV)"; \
+        npm run build --configuration=development; \
     else \
         echo "Building for development environment (RAILWAY_ENVIRONMENT=$RAILWAY_ENVIRONMENT, APP_ENV=$APP_ENV)"; \
         npm run build --configuration=development; \
