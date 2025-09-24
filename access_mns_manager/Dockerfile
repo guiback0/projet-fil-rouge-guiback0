@@ -109,7 +109,7 @@ RUN set -eux; \
 	echo "APP_DEBUG=false" >> .env; \
 	echo "APP_SECRET=${GENERATED_SECRET}" >> .env; \
 	echo "DATABASE_URL=${DATABASE_URL}" >> .env; \
-	echo "TRUSTED_PROXIES=REMOTE_ADDR" >> .env; \
+	echo "TRUSTED_PROXIES=100.64.0.0/16" >> .env; \
 	echo "TRUSTED_HOSTS=^access-mns-manager-qa\.up\.railway\.app$" >> .env; \
 	mkdir -p var/cache var/log; \
 	composer dump-autoload --classmap-authoritative; \
