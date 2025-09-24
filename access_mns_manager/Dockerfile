@@ -103,8 +103,11 @@ ENV SERVER_NAME=access-mns-manager-qa.up.railway.app
 
 RUN set -eux; \
 	echo "APP_ENV=prod" > .env; \
+	echo "APP_DEBUG=false" >> .env; \
 	echo "APP_SECRET=${APP_SECRET}" >> .env; \
 	echo "DATABASE_URL=${DATABASE_URL}" >> .env; \
+	echo "TRUSTED_PROXIES=127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16" >> .env; \
+	echo "TRUSTED_HOSTS=^access-mns-manager-qa\.up\.railway\.app$" >> .env; \
 	mkdir -p var/cache var/log; \
 	composer dump-autoload --classmap-authoritative; \
 	chmod +x bin/console; sync
