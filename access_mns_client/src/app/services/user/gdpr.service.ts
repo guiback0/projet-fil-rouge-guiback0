@@ -7,7 +7,7 @@ import {
   AccountDeactivationResponse,
 } from '../../interfaces/user.interface';
 import { TokenService } from '../auth/token.service';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments';
 
 @Injectable({
   providedIn: 'root',

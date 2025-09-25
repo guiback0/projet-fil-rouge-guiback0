@@ -64,8 +64,8 @@ if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		php bin/console cache:warmup --no-interaction
 	fi
 
-	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
-	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
+	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var 2>/dev/null || true
+	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var 2>/dev/null || true
 
 	echo 'PHP app ready!'
 fi

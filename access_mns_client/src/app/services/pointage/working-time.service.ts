@@ -6,7 +6,7 @@ import {
   WorkingTimePeriod,
 } from '../../interfaces/pointage.interface';
 import { TokenService } from '../auth/token.service';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments';
 
 @Injectable({
   providedIn: 'root',

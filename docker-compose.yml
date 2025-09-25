@@ -68,7 +68,7 @@ services:
       context: ./access_mns_client
       dockerfile: Dockerfile
       args:
-        - APP_ENV=dev
+        - APP_ENV=${APP_ENV_FRONTEND:-docker}
     container_name: ${CLIENT_CONTAINER_NAME:-access_mns_client}
     restart: unless-stopped
     ports:

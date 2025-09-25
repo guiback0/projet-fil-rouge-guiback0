@@ -7,7 +7,7 @@ import {
   UserProfileResponse,
 } from '../../interfaces/user.interface';
 import { TokenService } from './token.service';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments';
 
 @Injectable({
   providedIn: 'root',

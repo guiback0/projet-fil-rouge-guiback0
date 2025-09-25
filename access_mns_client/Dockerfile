@@ -30,18 +30,17 @@ ARG RAILWAY_ENVIRONMENT
 ARG APP_ENV
 
 # Build the Angular application with appropriate configuration
-# Use the correct config based on Railway environment
-RUN if [ "$RAILWAY_ENVIRONMENT" = "prod" ] || [ "$APP_ENV" = "prod" ]; then \
-        echo "Building for production environment (RAILWAY_ENVIRONMENT=$RAILWAY_ENVIRONMENT, APP_ENV=$APP_ENV)"; \
+RUN if [ "$APP_ENV" = "prod" ]; then \
+        echo "Building for production environment (APP_ENV=$APP_ENV)"; \
         npm run build --configuration=production; \
-    elif [ "$RAILWAY_ENVIRONMENT" = "qa" ] || [ "$APP_ENV" = "qa" ] || [ -n "$RAILWAY_ENVIRONMENT" ]; then \
-        echo "Building for QA environment (RAILWAY_ENVIRONMENT=$RAILWAY_ENVIRONMENT, APP_ENV=$APP_ENV)"; \
+    elif [ "$APP_ENV" = "qa" ]; then \
+        echo "Building for QA environment (APP_ENV=$APP_ENV)"; \
         npm run build --configuration=qa; \
-    elif [ "$APP_ENV" = "dev" ]; then \
-        echo "Building for local development environment (APP_ENV=$APP_ENV)"; \
-        npm run build --configuration=development; \
+    elif [ "$APP_ENV" = "docker" ]; then \
+        echo "Building for Docker local development environment (APP_ENV=$APP_ENV)"; \
+        npm run build --configuration=docker; \
     else \
-        echo "Building for development environment (RAILWAY_ENVIRONMENT=$RAILWAY_ENVIRONMENT, APP_ENV=$APP_ENV)"; \
+        echo "Building for default development environment (APP_ENV=$APP_ENV)"; \
         npm run build --configuration=development; \
     fi
 
